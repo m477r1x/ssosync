@@ -19,6 +19,7 @@ Metadata:
           - LogLevel
           - LogFormat
           - ScheduleExpression
+          - IncludeGroups
 
   AWS::ServerlessRepo::Application:
     Name: ssosync
@@ -60,6 +61,9 @@ Parameters:
   SCIMEndpointAccessToken:
     Type: String
     Description: AWS SSO SCIM AccessToken
+  IncludeGroups:
+    Type: String
+    Description: Specify which groups to include in the sync
 
 Resources:
   SSOSyncFunction:
@@ -76,6 +80,7 @@ Resources:
           SSOSYNC_GOOGLE_ADMIN: !Ref AWSGoogleAdminEamil
           SSOSYNC_SCIM_ENDPOINT: !Ref AWSSCIMEndpointSecret
           SSOSYNC_SCIM_ACCESS_TOKEN: !Ref AWSSCIMAccessTokenSecret
+          SSOSYNC_INCLUDE_GROUPS: !Ref IncludeGroups
       Policies:
         - Statement:
           - Sid: SSMGetParameterPolicy
